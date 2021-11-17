@@ -12,6 +12,9 @@ public class EnemyController : MonoBehaviour
     public LayerMask wallLayerMask;
     public bool isGroundAhead;
 
+    [Header("Enemy Animator")]
+    public Animator enemyAnimator;
+
     [Header("Player Detection")]
     public LineOfSight enemyLOS;
 
@@ -22,6 +25,7 @@ public class EnemyController : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         enemyLOS = GetComponent<LineOfSight>();
+        enemyAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -32,7 +36,13 @@ public class EnemyController : MonoBehaviour
 
         if (!hasLineOfSight())
         {
+            enemyAnimator.enabled = true;
+            enemyAnimator.Play("Run");
             MoveEnemy();
+        }
+        else
+        {
+            enemyAnimator.enabled = false;
         }
     }
 
