@@ -6,6 +6,8 @@ public class PlayerBehaviour : MonoBehaviour
 {
     [Header("Joystick")]
     public Joystick playerJoystick;
+    [Range(0.01f, 1.0f)]
+    public float movementSensitivity;
 
     [Header("Movement")] 
     public float horizontalForce;
@@ -39,12 +41,12 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Move()
     {
-        float x = Input.GetAxisRaw("Horizontal") + playerJoystick.Horizontal;
+        float x = (Input.GetAxisRaw("Horizontal") + playerJoystick.Horizontal) * movementSensitivity;
 
         if (isGrounded)
         {
             // Keyboard Input
-            float y = Input.GetAxisRaw("Vertical") + playerJoystick.Vertical;
+            float y = (Input.GetAxisRaw("Vertical") + playerJoystick.Vertical) * movementSensitivity;
             float jump = Input.GetAxisRaw("Jump") + (UIController.jumpButtonDown ? 1.0f : 0.0f);
 
             // Check for Flip
