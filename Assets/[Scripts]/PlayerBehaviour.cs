@@ -19,6 +19,9 @@ public class PlayerBehaviour : MonoBehaviour
     [Range(0.1f, 0.9f)]
     public float airControlFactor;
 
+    [Header("Sound")]
+    public AudioSource jumpSFX;
+
     [Header("Animation")] 
     public PlayerAnimationState state;
 
@@ -30,6 +33,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animatorController = GetComponent<Animator>();
+        jumpSFX = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -48,6 +52,11 @@ public class PlayerBehaviour : MonoBehaviour
             // Keyboard Input
             float y = (Input.GetAxisRaw("Vertical") + playerJoystick.Vertical) * movementSensitivity;
             float jump = Input.GetAxisRaw("Jump") + (UIController.jumpButtonDown ? 1.0f : 0.0f);
+
+            if (jump > 0)
+            {
+                jumpSFX.Play();
+            }
 
             // Check for Flip
 
